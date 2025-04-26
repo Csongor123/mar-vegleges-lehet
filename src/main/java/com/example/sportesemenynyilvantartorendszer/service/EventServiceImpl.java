@@ -1,0 +1,47 @@
+package com.example.sportesemenynyilvantartorendszer.service;
+
+import com.example.sportesemenynyilvantartorendszer.model.Event;
+import com.example.sportesemenynyilvantartorendszer.repository.EventRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+public class EventServiceImpl implements EventService {
+
+    private final EventRepository eventRepository;
+
+    @Override
+    public List<Event> findAll() {
+        return eventRepository.findAll();
+    }
+
+    @Override
+    public List<Event> findByKeyword(String keyword) {
+        return eventRepository.findByKeyword(keyword);
+    }
+
+
+    private String capitalize(String keyword) {
+        if (keyword == null || keyword.isEmpty()) return keyword;
+        return keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
+    }
+
+    @Override
+    public Optional<Event> findById(Long id) {
+        return eventRepository.findById(id);
+    }
+
+    @Override
+    public Event save(Event event) {
+        return eventRepository.save(event);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        eventRepository.deleteById(id);
+    }
+}

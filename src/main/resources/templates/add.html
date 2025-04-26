@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Új résztvevő hozzáadása</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <a href="/favorites" class="nav-link">
+        <i class="nav-icon">⭐</i> KEDVENCEK
+        <span class="favorite-count-badge" th:text="${favoriteCount}"></span>
+    </a>
+    <a href="/football" class="nav-link"><i class="nav-icon">⚽</i> FOCI</a>
+    <a href="/basketball" class="nav-link"><i class="nav-icon">🏀</i> KOSÁRLABDA</a>
+    <a href="/tennis" class="nav-link"><i class="nav-icon">🎾</i> TENISZ</a>
+    <a href="/swimming" class="nav-link"><i class="nav-icon">🏊</i> ÚSZÁS</a>
+    <a href="/running" class="nav-link"><i class="nav-icon">🏃</i> FUTÁS</a>
+</nav>
+
+<div class="main-content">
+    <div class="sidebar">
+        <div class="sidebar-header"><i>📊</i> TEVÉKENYSÉGEIM</div>
+        <div class="category-item" onclick="window.location.href='/'"><i>📅</i> Összes esemény</div>
+        <div class="category-item" onclick="window.location.href='/upcoming-events'"><i>🗓️</i> Közelgő események</div>
+        <div class="category-item" onclick="window.location.href='/completed-events'"><i>✅</i> Teljesített események</div>
+    </div>
+
+    <div class="content">
+        <div th:if="${param.error} != null" class="error-message">
+            <span th:if="${param.error[0]} == 'invalidAge'">Az életkor csak 0 és 99 között lehet!</span>
+            <span th:if="${param.error[0]} == 'noEvent'">Kérlek válassz ki egy meglévő eseményt vagy adj meg egy újat!</span>
+        </div>
+
+        <div class="add-participant-container">
+            <h2>Új résztvevő hozzáadása</h2>
+
+            <form th:action="@{/add-participant}" th:object="${participant}" method="post">
+                <label for="name">Név:</label>
+                <input type="text" th:field="*{name}" id="name" required><br>
+
+                <label for="age">Életkor:</label>
+                <input type="number" th:field="*{age}" id="age" min="0" max="99" required><br>
+
+                <label for="email">Email:</label>
+                <input type="email" th:field="*{email}" id="email" required><br>
+
+                <label for="activityDate">Tevékenység dátuma:</label>
+                <input type="date" th:field="*{activityDate}" id="activityDate" name="activityDate" required><br>
+
+                <label for="categorySelect">Sportág:</label>
+                <select id="categorySelect" name="category" required>
+                    <option value="">-- Válassz sportágat --</option>
+                    <option th:each="cat : ${categories}" th:value="${cat}" th:text="${cat}"></option>
+                </select><br>
+
+                <label for="eventSelect">Esemény kiválasztása:</label>
+                <select th:field="*{event.id}" id="eventSelect" name="event.id">
+                    <option value="">-- Válassz meglévő eseményt vagy adj meg újat --</option>
+                    <option th:each="ev : ${events}" th:data-cat="${ev.category}" th:value="${ev.id}" th:text="${ev.name}"></option>
+                </select><br>
+
+                <label for="newEventName">Új esemény neve:</label>
+                <input type="text" id="newEventName" name="newEventName"><br>
+
+                <label for="newEventLocation">Új esemény helyszíne:</label>
+                <input type="text" id="newEventLocation" name="newEventLocation"><br>
+
+                <button type="submit">Mentés</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const categorySelect = document.getElementById('categorySelect');
+    const eventSelect = document.getElementById('eventSelect');
+    const newEventName = document.getElementById('newEventName');
+    const newEventLocation = document.getElementById('newEventLocation');
+    const activityDate = document.getElementById('activityDate');
+
+    categorySelect.addEventListener('change', function () {
+        const selectedCategory = this.value;
+        Array.from(eventSelect.options).forEach(option => {
+            if (!option.value) return;
+            const category = option.getAttribute('data-cat');
+            option.style.display = (category === selectedCategory) ? 'block' : 'none';
+        });
+        eventSelect.value = "";
+    });
+
+    function toggleEventSelect() {
+        const hasNew = newEventName.value.trim() !== "" || newEventLocation.value.trim() !== "";
+        eventSelect.disabled = hasNew;
+        activityDate.disabled = false;
+        if (hasNew) {
+            eventSelect.value = "";
+        }
+    }
+
+    newEventName.addEventListener('input', toggleEventSelect);
+    newEventLocation.addEventListener('input', toggleEventSelect);
+
+    eventSelect.addEventListener('change', function () {
+        const disabled = this.value !== "";
+        newEventName.disabled = disabled;
+        newEventLocation.disabled = disabled;
+        activityDate.disabled = disabled;
+        if (disabled) {
+            newEventName.value = "";
+            newEventLocation.value = "";
+        }
+    });
+</script>
+
+</body>
+</html>
