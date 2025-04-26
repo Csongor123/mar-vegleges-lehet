@@ -18,8 +18,21 @@ body {
     position: sticky;
     top: 0;
     z-index: 100;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.navbar::-webkit-scrollbar {
+    height: 6px;
 }
 
+.navbar::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.navbar::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 .navbar a {
     color: white;
     text-decoration: none;
@@ -281,7 +294,7 @@ body {
     cursor: pointer;
 }
 
-/* Add Event Form Styles */
+
 .add-event-button {
     position: fixed;
     bottom: 2rem;

@@ -14,14 +14,20 @@
     </a>
     <a href="/football" class="nav-link"><i class="nav-icon">⚽</i> FOCI</a>
     <a href="/basketball" class="nav-link"><i class="nav-icon">🏀</i> KOSÁRLABDA</a>
+    <a href="/running" class="nav-link"><i class="nav-icon">🏃</i> FUTÁS</a>
     <a href="/tennis" class="nav-link"><i class="nav-icon">🎾</i> TENISZ</a>
     <a href="/swimming" class="nav-link"><i class="nav-icon">🏊</i> ÚSZÁS</a>
-    <a href="/running" class="nav-link"><i class="nav-icon">🏃</i> FUTÁS</a>
+    <a href="/volleyball" class="nav-link"><i class="nav-icon">🏐</i> RÖPLABDA</a>
+    <a href="/handball" class="nav-link"><i class="nav-icon">🤾</i> KÉZILABDA</a>
+    <a href="/icehockey" class="nav-link"><i class="nav-icon">🏒</i> JÉGKORONG</a>
+    <a href="/cycling" class="nav-link"><i class="nav-icon">🚴</i> KERÉKPÁROZÁS</a>
+    <a href="/fencing" class="nav-link"><i class="nav-icon">🤺</i> VÍVÁS</a>
+    <a href="/tabletennis" class="nav-link"><i class="nav-icon">🏓</i> ASZTALITENISZ</a>
 </nav>
 
 <div class="main-content">
     <div class="sidebar">
-        <div class="sidebar-header"><i>📊</i> TEVÉKENYSÉGEIM</div>
+        <div class="sidebar-header"><i>📊</i> AKTIVITÁSAIM</div>
         <div class="category-item" onclick="window.location.href='/'"><i>📅</i> Összes esemény</div>
         <div class="category-item" onclick="window.location.href='/upcoming-events'"><i>🗓️</i> Közelgő események</div>
         <div class="category-item" onclick="window.location.href='/completed-events'"><i>✅</i> Teljesített események</div>
@@ -46,8 +52,8 @@
                 <label for="email">Email:</label>
                 <input type="email" th:field="*{email}" id="email" required><br>
 
-                <label for="activityDate">Tevékenység dátuma:</label>
-                <input type="date" th:field="*{activityDate}" id="activityDate" name="activityDate" required><br>
+                <label for="activityDate">Aktivitás dátuma:</label>
+                <input type="date" th:field="*{activityDate}" id="activityDate" required><br>
 
                 <label for="categorySelect">Sportág:</label>
                 <select id="categorySelect" name="category" required>
@@ -56,8 +62,8 @@
                 </select><br>
 
                 <label for="eventSelect">Esemény kiválasztása:</label>
-                <select th:field="*{event.id}" id="eventSelect" name="event.id">
-                    <option value="">-- Válassz meglévő eseményt vagy adj meg újat --</option>
+                <select th:field="*{event.id}" id="eventSelect">
+                    <option value="">-- Válassz meglévőt vagy hagyd üresen újhoz --</option>
                     <option th:each="ev : ${events}" th:data-cat="${ev.category}" th:value="${ev.id}" th:text="${ev.name}"></option>
                 </select><br>
 
@@ -67,7 +73,7 @@
                 <label for="newEventLocation">Új esemény helyszíne:</label>
                 <input type="text" id="newEventLocation" name="newEventLocation"><br>
 
-                <button type="submit">Mentés</button>
+                <button type="submit">Résztvevő mentése</button>
             </form>
         </div>
     </div>

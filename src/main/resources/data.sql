@@ -1,82 +1,82 @@
 -- Sample events
 INSERT INTO event (name, location, date, category) VALUES
 -- Running
-('Running - Annual Marathon', 'City Park', '2025-06-15', 'Running'),
-('Running - Charity Run', 'River Park', '2026-03-01', 'Running'),
+('Félmaraton', 'Városi Park', '2025-06-15', 'Futás'),
+('Jótákonysági Futás', 'Erdő Park', '2026-03-01', 'Futás'),
 
 -- Swimming
-('Swimming - Championship', 'Olympic Pool', '2025-07-10', 'Swimming'),
-('Swimming - Old Swim Meet', 'Local Pool', '2023-05-22', 'Swimming'),
+('Bajnokság', 'Városi Uszoda', '2025-07-10', 'Úszás'),
+('Általános Tesnevelés', 'Egyetem Uszoda', '2023-05-22', 'Úszás'),
 
 -- Basketball
-('Basketball - Tournament', 'Sports Arena', '2025-08-05', 'Basketball'),
+('felkészülés', 'Sporterem', '2025-08-05', 'Kosárlabda'),
 
 -- Football
-('Football - Cup', 'National Stadium', '2025-09-01', 'Football'),
-('Football - League Match', 'Debrecen Arena', '2025-09-15', 'Football'),
+('Kupa', 'Középiskola Focipálya', '2025-09-01', 'Labdarúgás'),
+('Járási edzés', 'Helyi Focipálya', '2025-09-15', 'Labdarúgás'),
 
 -- Tennis
-('Tennis - Open', 'Grand Court', '2025-10-05', 'Tennis'),
+('Open', 'Iskolai Teniszpálya', '2025-10-05', 'Tennis'),
 
 -- Röplabda
-('Volleyball - National Championship', 'Beach Arena', '2025-08-20', 'Röplabda'),
+('Városi bajnokság', 'Helyi Tornaterem', '2025-08-20', 'Röplabda'),
 
 -- Kézilabda
-('Handball - League Final', 'City Hall', '2025-11-12', 'Kézilabda'),
+('Barátságos meccs', 'Városi Tornacsarnok', '2025-11-12', 'Kézilabda'),
 
 -- Jégkorong
-('Ice Hockey - Winter Cup', 'Ice Rink Stadium', '2025-12-01', 'Jégkorong'),
+('Téli Bajnokság', 'Korcsolyapálya', '2025-12-01', 'Jégkorong'),
 
 -- Kerékpározás
-('Cycling - City Tour', 'City Streets', '2025-05-18', 'Kerékpározás'),
+('Kerékpártúra', 'Település utcái', '2025-05-18', 'Kerékpározás'),
 
 -- Vívás
-('Fencing - Summer Tournament', 'Grand Hall', '2025-06-05', 'Vívás'),
+('Nyári bajnokság', 'Kistornaterem', '2025-06-05', 'Vívás'),
 
 -- Asztalitenisz
-('Table Tennis - Open Cup', 'Community Center', '2025-07-01', 'Asztalitenisz');
+('Edző meccs', 'Szabadidőpark', '2025-07-01', 'Asztalitenisz');
 
 
 
 -- Sample participants
 INSERT INTO participant (name, age, email, activity_date, event_id) VALUES
 -- Running
-('John Doe', 35, 'john@example.com', '2025-04-25', 1),
-('Jane Smith', 28, 'jane@example.com', '2025-04-25', 1),
-('New Runner', 19, 'newrunner@example.com', '2025-04-25', 2),
+('Kiss Ferenc', 35, 'feri@example.com', '2025-04-25', 1),
+('Nagy Helga', 28, 'helga@example.com', '2025-04-25', 1),
+('Kovács Bence', 19, 'bence@example.com', '2025-04-25', 2),
 
 -- Swimming
-('Michael Johnson', 30, 'michael@example.com', '2025-04-25', 3),
-('Emma Waters', 26, 'emma@example.com', '2025-04-25', 4),
+('Tóth Mihály', 30, 'toth@example.com', '2025-04-25', 3),
+('Fazekas Dóra', 26, 'dóra@example.com', '2025-04-25', 4),
 
 -- Basketball
-('James Hooper', 22, 'james@example.com', '2025-04-25', 5),
+('Szabó Kornél', 22, 'kornél@example.com', '2025-04-25', 5),
 
 -- Football
-('David Beckham', 45, 'david@example.com', '2025-04-25', 6),
-('Cristiano Ronaldo', 39, 'ronaldo@example.com', '2025-04-25', 7),
+('Varga Dominik', 45, 'dom@example.com', '2025-04-25', 6),
+('Kecskés Balázs', 39, 'bzs@example.com', '2025-04-25', 7),
 
 -- Tennis
-('Serena Williams', 42, 'serena@example.com', '2025-04-25', 8),
+('Babos Boglárka', 42, 'bogi@example.com', '2025-04-25', 8),
 
 -- Röplabda
-('Lili Horváth', 24, 'lili@example.com', '2025-04-25', 9),
-('Ádám Nagy', 27, 'adam@example.com', '2025-04-25', 9),
+('Horváth Lili', 24, 'lili@example.com', '2025-04-25', 9),
+('Nagy Ádám', 27, 'adam@example.com', '2025-04-25', 9),
 
 -- Kézilabda
-('Péter Kovács', 29, 'peter@example.com', '2025-04-25', 10),
-('Judit Tóth', 31, 'judit@example.com', '2025-04-25', 10),
+('Kovács Péter', 29, 'peter@example.com', '2025-04-25', 10),
+(' Tóth Judit', 31, 'judit@example.com', '2025-04-25', 10),
 
 -- Jégkorong
-('Martin Kiss', 32, 'martin@example.com', '2025-04-25', 11),
-('Dániel Major', 34, 'daniel@example.com', '2025-04-25', 11),
+(' Kiss Martin', 32, 'martin@example.com', '2025-04-25', 11),
+(' Major Dániel', 34, 'daniel@example.com', '2025-04-25', 11),
 
 -- Kerékpározás
-('Norbert Varga', 36, 'norbert@example.com', '2025-04-25', 12),
-('Krisztina Szabó', 25, 'krisztina@example.com', '2025-04-25', 12),
+(' Varga Norbert', 36, 'norbert@example.com', '2025-04-25', 12),
+(' Szabó Krisztina', 25, 'krisztina@example.com', '2025-04-25', 12),
 
 -- Vívás
-('Gergő Farkas', 21, 'gergo@example.com', '2025-04-25', 13),
+(' Farkas Gergő', 21, 'gergo@example.com', '2025-04-25', 13),
 
 -- Asztalitenisz
-('Tamás Németh', 23, 'tamas@example.com', '2025-04-25', 14);
+(' Németh Tamás', 23, 'tamas@example.com', '2025-04-25', 14);
