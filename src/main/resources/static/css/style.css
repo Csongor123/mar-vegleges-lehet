@@ -55,6 +55,21 @@ body {
     margin-right: 0.5rem;
     font-size: 1.2rem;
 }
+.logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    background-color: white;
+    color: #0a1a2f;
+    font-weight: bold;
+    font-size: 18px;
+    border-radius: 50%;
+    text-decoration: none;
+}
+
 
 .favorites-btn {
     display: flex;
@@ -509,4 +524,26 @@ th:nth-child(3), td:nth-child(3) { width: 20%; }  /* Helyszín */
 th:nth-child(4), td:nth-child(4) { width: 15%; }  /* Dátum */
 th:nth-child(5), td:nth-child(5) { width: 15%; }  /* Résztvevők */
 th:nth-child(6), td:nth-child(6) { width: 10%; }  /* Kedvenc */
+
+.logo-link {
+    background-color: transparent;
+    color: white;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo-link:hover {
+    background-color: white;
+    color: #001f3f;
+    transition: all 0.3s ease;
+}
+
+
 

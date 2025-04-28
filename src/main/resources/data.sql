@@ -16,7 +16,7 @@ INSERT INTO event (name, location, date, category) VALUES
 ('Járási edzés', 'Helyi Focipálya', '2025-09-15', 'Labdarúgás'),
 
 -- Tennis
-('Open', 'Iskolai Teniszpálya', '2025-10-05', 'Tennis'),
+('Open', 'Iskolai Teniszpálya', '2025-10-05', 'Tenisz'),
 
 -- Röplabda
 ('Városi bajnokság', 'Helyi Tornaterem', '2025-08-20', 'Röplabda'),
@@ -35,7 +35,6 @@ INSERT INTO event (name, location, date, category) VALUES
 
 -- Asztalitenisz
 ('Edző meccs', 'Szabadidőpark', '2025-07-01', 'Asztalitenisz');
-
 
 
 -- Sample participants
@@ -65,18 +64,18 @@ INSERT INTO participant (name, age, email, activity_date, event_id) VALUES
 
 -- Kézilabda
 ('Kovács Péter', 29, 'peter@example.com', '2025-04-25', 10),
-(' Tóth Judit', 31, 'judit@example.com', '2025-04-25', 10),
+('Tóth Judit', 31, 'judit@example.com', '2025-04-25', 10),
 
 -- Jégkorong
-(' Kiss Martin', 32, 'martin@example.com', '2025-04-25', 11),
-(' Major Dániel', 34, 'daniel@example.com', '2025-04-25', 11),
+('Kiss Martin', 32, 'martin@example.com', '2025-04-25', 11),
+('Major Dániel', 34, 'daniel@example.com', '2025-04-25', 11),
 
 -- Kerékpározás
-(' Varga Norbert', 36, 'norbert@example.com', '2025-04-25', 12),
-(' Szabó Krisztina', 25, 'krisztina@example.com', '2025-04-25', 12),
+('Varga Norbert', 36, 'norbert@example.com', '2025-04-25', 12),
+('Szabó Krisztina', 25, 'krisztina@example.com', '2025-04-25', 12),
 
 -- Vívás
-(' Farkas Gergő', 21, 'gergo@example.com', '2025-04-25', 13),
+('Farkas Gergő', 21, 'gergo@example.com', '2025-04-25', 13),
 
 -- Asztalitenisz
-(' Németh Tamás', 23, 'tamas@example.com', '2025-04-25', 14);
+('Németh Tamás', 23, 'tamas@example.com', '2025-04-25', 14);

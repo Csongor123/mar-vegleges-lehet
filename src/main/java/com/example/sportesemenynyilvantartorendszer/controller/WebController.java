@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -23,118 +24,106 @@ public class WebController {
 
     @ModelAttribute("favoriteCount")
     public long favoriteCount() {
-        return eventService.findAll().stream().filter(Event::isFavorite).count();
+        return eventService.findAll().stream()
+                .filter(Event::isFavorite)
+                .count();
     }
 
     @ModelAttribute("categories")
     public List<String> categories() {
-        return List.of("Futás", "Kosárlabda", "Tenisz", "Úszás", "Foci", "Röplabda", "Kézilabda", "Jégkorong", "Kerékpározás", "Vívás", "Asztalitenisz");
+        return List.of("Futás", "Kosárlabda", "Tenisz", "Úszás", "Labdarúgás", "Röplabda",
+                "Kézilabda", "Jégkorong", "Kerékpározás", "Vívás", "Asztalitenisz");
     }
 
     @GetMapping("/")
     public String index(Model model) {
-        model.addAttribute("events", eventService.findAll());
+        model.addAttribute("events", eventService.findAll().stream()
+                .sorted(Comparator.comparing(Event::getDate))
+                .toList());
         model.addAttribute("title", "Összes sportesemény");
         return "index";
     }
 
     @GetMapping("/football")
     public String footballPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Foci"));
-        model.addAttribute("title", "Foci események");
-        return "event-list";
+        return listEventsByCategory(model, "Labdarúgás", "Labdarúgás események");
     }
 
     @GetMapping("/basketball")
     public String basketballPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Kosárlabda"));
-        model.addAttribute("title", "Kosárlabda események");
-        return "event-list";
+        return listEventsByCategory(model, "Kosárlabda", "Kosárlabda események");
     }
 
     @GetMapping("/tennis")
     public String tennisPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Tenisz"));
-        model.addAttribute("title", "Tenisz események");
-        return "event-list";
+        return listEventsByCategory(model, "Tenisz", "Tenisz események");
     }
 
     @GetMapping("/swimming")
     public String swimmingPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Úszás"));
-        model.addAttribute("title", "Úszás események");
-        return "event-list";
+        return listEventsByCategory(model, "Úszás", "Úszás események");
     }
 
     @GetMapping("/running")
     public String runningPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Futás"));
-        model.addAttribute("title", "Futás események");
-        return "event-list";
+        return listEventsByCategory(model, "Futás", "Futás események");
     }
 
     @GetMapping("/volleyball")
     public String volleyballPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Röplabda"));
-        model.addAttribute("title", "Röplabda események");
-        return "event-list";
+        return listEventsByCategory(model, "Röplabda", "Röplabda események");
     }
 
     @GetMapping("/handball")
     public String handballPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Kézilabda"));
-        model.addAttribute("title", "Kézilabda események");
-        return "event-list";
+        return listEventsByCategory(model, "Kézilabda", "Kézilabda események");
     }
 
     @GetMapping("/icehockey")
     public String icehockeyPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Jégkorong"));
-        model.addAttribute("title", "Jégkorong események");
-        return "event-list";
+        return listEventsByCategory(model, "Jégkorong", "Jégkorong események");
     }
 
     @GetMapping("/cycling")
     public String cyclingPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Kerékpározás"));
-        model.addAttribute("title", "Kerékpár események");
-        return "event-list";
+        return listEventsByCategory(model, "Kerékpározás", "Kerékpározás események");
     }
 
     @GetMapping("/fencing")
     public String fencingPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Vívás"));
-        model.addAttribute("title", "Vívás események");
-        return "event-list";
+        return listEventsByCategory(model, "Vívás", "Vívás események");
     }
 
     @GetMapping("/tabletennis")
     public String tabletennisPage(Model model) {
-        model.addAttribute("events", eventService.findByKeyword("Asztalitenisz"));
-        model.addAttribute("title", "Asztalitenisz események");
-        return "event-list";
+        return listEventsByCategory(model, "Asztalitenisz", "Asztalitenisz események");
     }
 
     @GetMapping("/favorites")
     public String favoritesPage(Model model) {
-        model.addAttribute("events", eventService.findAll().stream().filter(Event::isFavorite).toList());
+        model.addAttribute("events", eventService.findAll().stream()
+                .filter(Event::isFavorite)
+                .sorted(Comparator.comparing(Event::getDate))
+                .toList());
         model.addAttribute("title", "Kedvenc események");
         return "event-list";
     }
 
     @GetMapping("/upcoming-events")
-    public String upcomingPage(Model model) {
+    public String upcomingEvents(Model model) {
         model.addAttribute("events", eventService.findAll().stream()
                 .filter(event -> event.getDate() != null && event.getDate().isAfter(LocalDate.now()))
+                .sorted(Comparator.comparing(Event::getDate))
                 .toList());
         model.addAttribute("title", "Közelgő események");
         return "event-list";
     }
 
     @GetMapping("/completed-events")
-    public String completedPage(Model model) {
+    public String completedEvents(Model model) {
         model.addAttribute("events", eventService.findAll().stream()
                 .filter(event -> event.getDate() != null && !event.getDate().isAfter(LocalDate.now()))
+                .sorted(Comparator.comparing(Event::getDate))
                 .toList());
         model.addAttribute("title", "Teljesített események");
         return "event-list";
@@ -143,7 +132,9 @@ public class WebController {
     @GetMapping("/add")
     public String showAddPage(Model model) {
         model.addAttribute("participant", new Participant());
-        model.addAttribute("events", eventService.findAll());
+        model.addAttribute("events", eventService.findAll().stream()
+                .sorted(Comparator.comparing(Event::getDate))
+                .toList());
         return "add";
     }
 
@@ -153,7 +144,6 @@ public class WebController {
                                  @RequestParam(required = false) String newEventName,
                                  @RequestParam(required = false) String newEventLocation,
                                  RedirectAttributes redirectAttributes) {
-
         if (participant.getAge() < 0 || participant.getAge() > 99) {
             redirectAttributes.addAttribute("error", "invalidAge");
             return "redirect:/add";
@@ -196,8 +186,7 @@ public class WebController {
             event.setFavorite(!event.isFavorite());
             eventService.save(event);
         });
-        String referer = request.getHeader("Referer");
-        return "redirect:" + (referer != null ? referer : "/");
+        return "redirect:" + getReferer(request);
     }
 
     @PostMapping("/unfollow-favorite/{id}")
@@ -208,14 +197,26 @@ public class WebController {
                 eventService.save(event);
             }
         });
-        String referer = request.getHeader("Referer");
-        return "redirect:" + (referer != null ? referer : "/");
+        return "redirect:" + getReferer(request);
     }
 
     @PostMapping("/delete-participant/{id}")
     public String deleteParticipant(@PathVariable Long id, HttpServletRequest request) {
         participantService.deleteById(id);
+        return "redirect:" + getReferer(request);
+    }
+
+    private String listEventsByCategory(Model model, String category, String title) {
+        model.addAttribute("events", eventService.findByCategory(category).stream()
+                .sorted(Comparator.comparing(Event::getDate))
+                .toList());
+        model.addAttribute("title", title);
+        return "event-list";
+    }
+
+
+    private String getReferer(HttpServletRequest request) {
         String referer = request.getHeader("Referer");
-        return "redirect:" + (referer != null ? referer : "/");
+        return referer != null ? referer : "/";
     }
 }

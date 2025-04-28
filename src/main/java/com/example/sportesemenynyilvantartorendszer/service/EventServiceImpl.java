@@ -29,6 +29,10 @@ public class EventServiceImpl implements EventService {
         if (keyword == null || keyword.isEmpty()) return keyword;
         return keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
     }
+    @Override
+    public List<Event> findByCategory(String category) {
+        return eventRepository.findByCategory(category);
+    }
 
     @Override
     public Optional<Event> findById(Long id) {
