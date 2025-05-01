@@ -8,6 +8,9 @@
 <body>
 
 <nav class="navbar">
+    <a href="/" class="logo-link">
+        SN
+    </a>
     <a href="/favorites" class="nav-link">
         <i class="nav-icon">⭐</i> KEDVENCEK
         <span class="favorite-count-badge" th:text="${favoriteCount}"></span>
@@ -28,9 +31,11 @@
 <div class="main-content">
     <div class="sidebar">
         <div class="sidebar-header"><i>📊</i> ESEMÉNYEK</div>
-        <div class="category-item" onclick="window.location.href='/'"><i>📅</i> Összes esemény</div>
-        <div class="category-item" onclick="window.location.href='/upcoming-events'"><i>🗓️</i> Közelgő események</div>
-        <div class="category-item" onclick="window.location.href='/completed-events'"><i>✅</i> Teljesített események</div>
+        <div class="category-item " onclick="window.location.href='/'"><i>📅</i> Összes esemény</div>
+        <div class="category-item " onclick="window.location.href='/upcoming-events'"><i>🗓️</i> Közelgő események</div>
+        <div class="category-item " onclick="window.location.href='/completed-events'"><i>✅</i> Teljesített események</div>
+        <div class="category-item " onclick="window.location.href='/add'"><i>➕</i> Új résztvevő</div>
+
     </div>
 
     <div class="content">
@@ -64,7 +69,11 @@
                 <label for="eventSelect">Esemény kiválasztása:</label>
                 <select th:field="*{event.id}" id="eventSelect">
                     <option value="">-- Válassz meglévőt vagy hagyd üresen újhoz --</option>
-                    <option th:each="ev : ${events}" th:data-cat="${ev.category}" th:value="${ev.id}" th:text="${ev.name}"></option>
+                    <option th:each="ev : ${events}"
+                            th:data-cat="${ev.category}"
+                            th:value="${ev.id}"
+                            th:text="${ev.name + ' – ' + #temporals.format(ev.date, 'yyyy.MM.dd')}">
+                    </option>
                 </select><br>
 
                 <label for="newEventName">Új esemény neve:</label>
