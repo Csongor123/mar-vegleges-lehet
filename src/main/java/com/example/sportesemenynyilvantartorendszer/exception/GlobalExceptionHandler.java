@@ -20,6 +20,4 @@ public class GlobalExceptionHandler {
         error.put("status", HttpStatus.NOT_FOUND.value());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
-
-
 }

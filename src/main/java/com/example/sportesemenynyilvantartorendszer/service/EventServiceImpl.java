@@ -2,11 +2,10 @@ package com.example.sportesemenynyilvantartorendszer.service;
 
 import com.example.sportesemenynyilvantartorendszer.model.Event;
 import com.example.sportesemenynyilvantartorendszer.repository.EventRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.Optional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -24,11 +23,6 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findByKeyword(keyword);
     }
 
-
-    private String capitalize(String keyword) {
-        if (keyword == null || keyword.isEmpty()) return keyword;
-        return keyword.substring(0, 1).toUpperCase() + keyword.substring(1).toLowerCase();
-    }
     @Override
     public List<Event> findByCategory(String category) {
         return eventRepository.findByCategory(category);
@@ -47,5 +41,13 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteById(Long id) {
         eventRepository.deleteById(id);
+    }
+
+    private String capitalize(String keyword) {
+        if (keyword == null || keyword.isEmpty()) {
+            return keyword;
+        }
+        return keyword.substring(0, 1).toUpperCase()
+                + keyword.substring(1).toLowerCase();
     }
 }

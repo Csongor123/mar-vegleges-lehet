@@ -1,7 +1,6 @@
 package com.example.sportesemenynyilvantartorendszer.service;
 
 import com.example.sportesemenynyilvantartorendszer.model.Participant;
-
 import java.util.List;
 import java.util.Optional;
 

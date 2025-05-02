@@ -1,40 +1,40 @@
 -- Sample events
-INSERT INTO event (name, location, date, category) VALUES
+INSERT INTO event (name, location, date, category, favorite) VALUES
 -- Running
-('Félmaraton', 'Városi Park', '2025-06-15', 'Futás'),
-('Jótákonysági Futás', 'Erdő Park', '2026-03-01', 'Futás'),
+('Félmaraton', 'Városi Park', '2025-06-15', 'Futás', false),
+('Jótákonysági Futás', 'Erdő Park', '2026-03-01', 'Futás',false),
 
 -- Swimming
-('Bajnokság', 'Városi Uszoda', '2025-07-10', 'Úszás'),
-('Általános Tesnevelés', 'Egyetem Uszoda', '2023-05-22', 'Úszás'),
+('Bajnokság', 'Városi Uszoda', '2025-07-10', 'Úszás',false),
+('Általános Tesnevelés', 'Egyetem Uszoda', '2023-05-22', 'Úszás', false),
 
 -- Basketball
-('felkészülés', 'Sporterem', '2025-08-05', 'Kosárlabda'),
+('felkészülés', 'Sporterem', '2025-08-05', 'Kosárlabda', false),
 
 -- Football
-('Kupa', 'Középiskola Focipálya', '2025-09-01', 'Labdarúgás'),
-('Járási edzés', 'Helyi Focipálya', '2025-09-15', 'Labdarúgás'),
+('Kupa', 'Középiskola Focipálya', '2025-09-01', 'Labdarúgás', false),
+('Járási edzés', 'Helyi Focipálya', '2025-09-15', 'Labdarúgás', false),
 
 -- Tennis
-('Open', 'Iskolai Teniszpálya', '2025-10-05', 'Tenisz'),
+('Open', 'Iskolai Teniszpálya', '2025-10-05', 'Tenisz', false),
 
 -- Röplabda
-('Városi bajnokság', 'Helyi Tornaterem', '2025-08-20', 'Röplabda'),
+('Városi bajnokság', 'Helyi Tornaterem', '2025-08-20', 'Röplabda', false),
 
 -- Kézilabda
-('Barátságos meccs', 'Városi Tornacsarnok', '2025-11-12', 'Kézilabda'),
+('Barátságos meccs', 'Városi Tornacsarnok', '2025-11-12', 'Kézilabda', false),
 
 -- Jégkorong
-('Téli Bajnokság', 'Korcsolyapálya', '2025-12-01', 'Jégkorong'),
+('Téli Bajnokság', 'Korcsolyapálya', '2025-12-01', 'Jégkorong', false),
 
 -- Kerékpározás
-('Kerékpártúra', 'Település utcái', '2025-05-18', 'Kerékpározás'),
+('Kerékpártúra', 'Település utcái', '2025-05-18', 'Kerékpározás', false),
 
 -- Vívás
-('Nyári bajnokság', 'Kistornaterem', '2025-06-05', 'Vívás'),
+('Nyári bajnokság', 'Kistornaterem', '2025-06-05', 'Vívás', false),
 
 -- Asztalitenisz
-('Edző meccs', 'Szabadidőpark', '2025-07-01', 'Asztalitenisz');
+('Edző meccs', 'Szabadidőpark', '2025-07-01', 'Asztalitenisz', false);
 
 
 -- Sample participants

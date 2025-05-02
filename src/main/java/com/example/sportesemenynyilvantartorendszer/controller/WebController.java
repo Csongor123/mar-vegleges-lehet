@@ -8,7 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
@@ -21,6 +25,7 @@ public class WebController {
 
     private final EventService eventService;
     private final ParticipantService participantService;
+    private static final int MAX_AGE = 99;
 
     @ModelAttribute("favoriteCount")
     public long favoriteCount() {
@@ -31,8 +36,11 @@ public class WebController {
 
     @ModelAttribute("categories")
     public List<String> categories() {
-        return List.of("Futás", "Kosárlabda", "Tenisz", "Úszás", "Labdarúgás", "Röplabda",
-                "Kézilabda", "Jégkorong", "Kerékpározás", "Vívás", "Asztalitenisz");
+        return List.of(
+                "Futás", "Kosárlabda", "Tenisz", "Úszás", "Labdarúgás",
+                "Röplabda", "Kézilabda", "Jégkorong", "Kerékpározás",
+                "Vívás", "Asztalitenisz"
+        );
     }
 
     @GetMapping("/")
@@ -46,12 +54,14 @@ public class WebController {
 
     @GetMapping("/football")
     public String footballPage(Model model) {
-        return listEventsByCategory(model, "Labdarúgás", "Labdarúgás események");
+        return listEventsByCategory(model,
+                "Labdarúgás", "Labdarúgás események");
     }
 
     @GetMapping("/basketball")
     public String basketballPage(Model model) {
-        return listEventsByCategory(model, "Kosárlabda", "Kosárlabda események");
+        return listEventsByCategory(model,
+                "Kosárlabda", "Kosárlabda események");
     }
 
     @GetMapping("/tennis")
@@ -86,7 +96,8 @@ public class WebController {
 
     @GetMapping("/cycling")
     public String cyclingPage(Model model) {
-        return listEventsByCategory(model, "Kerékpározás", "Kerékpározás események");
+        return listEventsByCategory(model,
+                "Kerékpározás", "Kerékpározás események");
     }
 
     @GetMapping("/fencing")
@@ -96,7 +107,8 @@ public class WebController {
 
     @GetMapping("/tabletennis")
     public String tabletennisPage(Model model) {
-        return listEventsByCategory(model, "Asztalitenisz", "Asztalitenisz események");
+        return listEventsByCategory(model,
+                "Asztalitenisz", "Asztalitenisz események");
     }
 
     @GetMapping("/favorites")
@@ -112,7 +124,8 @@ public class WebController {
     @GetMapping("/upcoming-events")
     public String upcomingEvents(Model model) {
         model.addAttribute("events", eventService.findAll().stream()
-                .filter(event -> event.getDate() != null && event.getDate().isAfter(LocalDate.now()))
+                .filter(event -> event.getDate() != null
+                        && event.getDate().isAfter(LocalDate.now()))
                 .sorted(Comparator.comparing(Event::getDate))
                 .toList());
         model.addAttribute("title", "Közelgő események");
@@ -122,7 +135,8 @@ public class WebController {
     @GetMapping("/completed-events")
     public String completedEvents(Model model) {
         model.addAttribute("events", eventService.findAll().stream()
-                .filter(event -> event.getDate() != null && !event.getDate().isAfter(LocalDate.now()))
+                .filter(event -> event.getDate() != null
+                        && !event.getDate().isAfter(LocalDate.now()))
                 .sorted(Comparator.comparing(Event::getDate))
                 .toList());
         model.addAttribute("title", "Teljesített események");
@@ -139,19 +153,25 @@ public class WebController {
     }
 
     @PostMapping("/add-participant")
-    public String addParticipant(@ModelAttribute Participant participant,
-                                 @RequestParam(required = false) String category,
-                                 @RequestParam(required = false) String newEventName,
-                                 @RequestParam(required = false) String newEventLocation,
-                                 RedirectAttributes redirectAttributes) {
-        if (participant.getAge() < 0 || participant.getAge() > 99) {
+    public String addParticipant(
+            @ModelAttribute Participant participant,
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String newEventName,
+            @RequestParam(required = false) String newEventLocation,
+            RedirectAttributes redirectAttributes) {
+
+        if (participant.getAge() < 0 || participant.getAge() > MAX_AGE) {
             redirectAttributes.addAttribute("error", "invalidAge");
             return "redirect:/add";
         }
 
-        boolean existingSelected = participant.getEvent() != null && participant.getEvent().getId() != null;
-        boolean newEventProvided = newEventName != null && !newEventName.isBlank()
-                && newEventLocation != null && !newEventLocation.isBlank();
+        boolean existingSelected = participant.getEvent() != null
+                && participant.getEvent().getId() != null;
+
+        boolean newEventProvided = newEventName != null
+                && !newEventName.isBlank()
+                && newEventLocation != null
+                && !newEventLocation.isBlank();
 
         if (!existingSelected && !newEventProvided) {
             redirectAttributes.addAttribute("error", "noEvent");
@@ -169,7 +189,9 @@ public class WebController {
             eventService.save(newEvent);
             participant.setEvent(newEvent);
         } else if (existingSelected) {
-            Event existingEvent = eventService.findById(participant.getEvent().getId()).orElse(null);
+            Event existingEvent = eventService
+                    .findById(participant.getEvent().getId())
+                    .orElse(null);
             if (existingEvent != null) {
                 participant.setActivityDate(existingEvent.getDate());
                 participant.setEvent(existingEvent);
@@ -181,7 +203,8 @@ public class WebController {
     }
 
     @PostMapping("/toggle-favorite/{id}")
-    public String toggleFavorite(@PathVariable Long id, HttpServletRequest request) {
+    public String toggleFavorite(@PathVariable Long id,
+                                 HttpServletRequest request) {
         eventService.findById(id).ifPresent(event -> {
             event.setFavorite(!event.isFavorite());
             eventService.save(event);
@@ -190,7 +213,8 @@ public class WebController {
     }
 
     @PostMapping("/unfollow-favorite/{id}")
-    public String unfollowFavorite(@PathVariable Long id, HttpServletRequest request) {
+    public String unfollowFavorite(@PathVariable Long id,
+                                   HttpServletRequest request) {
         eventService.findById(id).ifPresent(event -> {
             if (event.isFavorite()) {
                 event.setFavorite(false);
@@ -201,19 +225,22 @@ public class WebController {
     }
 
     @PostMapping("/delete-participant/{id}")
-    public String deleteParticipant(@PathVariable Long id, HttpServletRequest request) {
+    public String deleteParticipant(@PathVariable Long id,
+                                    HttpServletRequest request) {
         participantService.deleteById(id);
         return "redirect:" + getReferer(request);
     }
 
-    private String listEventsByCategory(Model model, String category, String title) {
-        model.addAttribute("events", eventService.findByCategory(category).stream()
+    private String listEventsByCategory(Model model,
+                                        String category,
+                                        String title) {
+        model.addAttribute("events", eventService.findByCategory(category)
+                .stream()
                 .sorted(Comparator.comparing(Event::getDate))
                 .toList());
         model.addAttribute("title", title);
         return "event-list";
     }
-
 
     private String getReferer(HttpServletRequest request) {
         String referer = request.getHeader("Referer");
